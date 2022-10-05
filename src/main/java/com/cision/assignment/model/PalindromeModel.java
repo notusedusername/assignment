@@ -1,5 +1,6 @@
 package com.cision.assignment.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +20,6 @@ public class PalindromeModel {
     private String content;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssZ")
     private ZonedDateTime timestamp;
 }

@@ -9,17 +9,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @Service
 @RequiredArgsConstructor
 public class PalindromeService {
 
-    private PalindromeRepository palindromeRepository;
-    private SpelAwareProxyProjectionFactory projectionFactory;
-    private PalindromeProcessor palindromeProcessor;
+    private final PalindromeRepository palindromeRepository;
+    private final SpelAwareProxyProjectionFactory projectionFactory;
+    private final PalindromeProcessor palindromeProcessor;
 
-    public PalindromeProjection submitContentWithPalindrome(PalindromeModel model) {
+    public PalindromeProjection submitPalindromeCheckRequest(PalindromeModel model) {
         var entity = PalindromeEntity.builder()
                 .content(model.getContent())
                 .timestamp(model.getTimestamp())
