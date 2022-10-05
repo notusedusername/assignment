@@ -15,14 +15,20 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/palindromes",
-        consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE})
 public class PalindromeController {
 
     private final PalindromeService palindromeService;
 
-    @PostMapping("/")
+    @PostMapping(value = "/",
+        consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<PalindromeProjection> createPalindromeCheckRequest(@RequestBody @Valid PalindromeModel palindromeModel) {
         return ResponseEntity.ok(palindromeService.submitPalindromeCheckRequest(palindromeModel));
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<Page<PalindromeProjection>> getSubmittedPalindromeChecks(Pageable pageable,
+                                                                                   @RequestParam(name = "filter", required = false) String filter) {
+        return ResponseEntity.ok(palindromeService.getPalindromeRequests(pageable, filter));
     }
 }
