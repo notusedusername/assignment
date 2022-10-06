@@ -9,16 +9,15 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class LongestPalindromeProcessorServiceImpl implements LongestPalindromeService {
+public class LongestPalindromeServiceImpl implements LongestPalindromeService {
 
     private final PalindromeTesterService palindromeTester;
-    private final WordCollectorService wordCollector;
+    private final PalindromeSanitizerService sanitizerService;
 
-    private static final int MIN_PALINDROME_LENGTH = 1;
     @Override
     public int getLongestPalindromeSize(String text) {
-        var validWords = wordCollector.collectWords(text);
-        var palindromeCandidates = tearDownAllWords(validWords);
+        var alphanumericTextOnly = sanitizerService.sanitizeText(text);
+        var palindromeCandidates = getAllPalindromeCandidates(alphanumericTextOnly);
         return getLongestPalindromeFrom(palindromeCandidates);
     }
 
@@ -27,22 +26,16 @@ public class LongestPalindromeProcessorServiceImpl implements LongestPalindromeS
                 .filter(palindromeTester::isPalindrome)
                 .findFirst()
                 .map(String::length)
-                .orElse(MIN_PALINDROME_LENGTH);
+                .orElse(0);
     }
 
-    private HashSet<String> tearDownAllWords(Set<String> validWords) {
-        var candidates = new HashSet<>(validWords);
-        for(var word : validWords) {
-            putAllSubStringsOfWordToCandidates(word, candidates);
-        }
-        return candidates;
-    }
-
-    private void putAllSubStringsOfWordToCandidates(String word, Set<String> candidates) {
+    private Set<String> getAllPalindromeCandidates(String word) {
+        var candidates = new HashSet<String>();
         for (var start = 0; start < word.length(); start++) {
-            for(var end = start + 1; end < word.length(); end++) {
+            for(var end = start + 1; end <= word.length(); end++) {
                 candidates.add(word.substring(start, end));
             }
         }
+        return candidates;
     }
 }

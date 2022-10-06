@@ -16,13 +16,13 @@ public class PalindromeService {
 
     private final PalindromeRepository palindromeRepository;
     private final SpelAwareProxyProjectionFactory projectionFactory;
-    private final LongestPalindromeService palindromeProcessor;
+    private final LongestPalindromeService longestPalindromeService;
 
     public PalindromeProjection submitPalindromeCheckRequest(PalindromeModel model) {
         var entity = PalindromeEntity.builder()
                 .content(model.getContent())
                 .timestamp(model.getTimestamp())
-                .longestPalindrome(palindromeProcessor.getLongestPalindromeSize(model.getContent()))
+                .longestPalindrome(longestPalindromeService.getLongestPalindromeSize(model.getContent()))
                 .build();
         entity = palindromeRepository.save(entity);
         return projectionFactory.createProjection(PalindromeProjection.class, entity);

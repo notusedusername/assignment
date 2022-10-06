@@ -6,14 +6,24 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PalindromeTesterServiceImplTest {
 
-    private PalindromeTesterServiceImpl service = new PalindromeTesterServiceImpl();
+    private final PalindromeTesterServiceImpl service = new PalindromeTesterServiceImpl();
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "ada", "sadas", "Mr. Owl ate my metal worm",
-            "Was it a car or a cat I saw", "1221", "1a2bb2a1"
+            "ada", "sadas", "MrOwlatemymetalworm",
+            "WasitacaroracatIsaw", "abba"
     })
     void whenPassingPalindromeThenReturnTrue(String palindrome) {
         Assertions.assertTrue(service.isPalindrome(palindrome));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "adas", "sadmessedupas", "Mr. Owl ate my metal worms",
+            "Was it a car or a cat I saw there", "apple", "notpalindrome",
+            "palindrome", "ironically"
+    })
+    void whenPassingANotPalindromeWordThenReturnFalse(String notPalindrome) {
+        Assertions.assertFalse(service.isPalindrome(notPalindrome));
     }
 }
