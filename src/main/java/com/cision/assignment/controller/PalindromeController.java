@@ -3,6 +3,7 @@ package com.cision.assignment.controller;
 import com.cision.assignment.model.PalindromeModel;
 import com.cision.assignment.projection.PalindromeProjection;
 import com.cision.assignment.service.PalindromeService;
+import com.cision.assignment.util.ApiPaths;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/api/palindromes",
+@RequestMapping(path = ApiPaths.PALINDROMES,
         produces = {MediaType.APPLICATION_JSON_VALUE})
 public class PalindromeController {
 

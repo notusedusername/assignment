@@ -5,8 +5,8 @@ spring:
       ddl-auto: validate
   datasource:
     url: jdbc:postgresql://localhost:5432/palindrome
-    username: postgres
-    password: postgres
+    username: ${postgres_username}
+    password: ${postgres_password}
     driverClassName: org.postgresql.Driver
   flyway:
     enabled: true
