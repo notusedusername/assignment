@@ -1,7 +1,6 @@
 package com.cision.assignment.controller;
 
 import com.cision.assignment.util.ApiPaths;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -104,7 +103,7 @@ class PalindromeControllerTest {
             .andExpectAll(
                     status().isOk(),
                     jsonPath("$.content").value(content),
-                    // todo fix timestamp format
+                    // todo timezone handling
                     //jsonPath("$.timestamp").value(timestamp),
                     jsonPath("$.longest_palindrome_size").value(length));
     }
