@@ -4,7 +4,6 @@ import com.cision.assignment.entity.PalindromeEntity;
 import com.cision.assignment.model.PalindromeModel;
 import com.cision.assignment.projection.PalindromeProjection;
 import com.cision.assignment.repository.PalindromeRepository;
-import com.cision.assignment.util.PalindromeProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +16,7 @@ public class PalindromeService {
 
     private final PalindromeRepository palindromeRepository;
     private final SpelAwareProxyProjectionFactory projectionFactory;
-    private final PalindromeProcessor palindromeProcessor;
+    private final LongestPalindromeService palindromeProcessor;
 
     public PalindromeProjection submitPalindromeCheckRequest(PalindromeModel model) {
         var entity = PalindromeEntity.builder()
