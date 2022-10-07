@@ -34,7 +34,7 @@ The app has self-hosted OpenAPI documentation. [Browse](http://localhost:8080/sw
 ## Running tests
 
 The tests do not have a container, they can be run with Gradle (For requirements see: [Running without docker](#running-without-docker)). The tests require a database 
-named `palindrome_test` by default. This database is also migrated by Flyway, but it has additional
+named `palindrome_test` by default (has to be created manually). This database is also migrated by Flyway, but it has additional
 [migrations](./src/main/resources/db/test_data) to create initial content. These migrations will clean the
 database before running the scripts.
 
