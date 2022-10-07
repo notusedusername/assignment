@@ -51,3 +51,25 @@ of your local time.
 
 The Hikari Pool complains about closed DB connections, it is probably something with the Docker networking
 (like shorter connection TTL that Postgres would have itself).
+
+## Changed longest palindrome algorithm
+
+### Original algorithm
+
+The initial algorithm created all possible substrings, sorted them by length descending,
+and started to check the candidates one by one. This is consuming much more resources than needed, 
+and runs pretty slow if a long text has a short palindrome.
+
+**Test with 5 paragraph of Lorem ipsum:** appr. 27s
+
+### Current algorithm
+
+Instead of creating all possible substrings, creating them starting with the longest, and
+testing it immediately.
+
+**Test with the same 5 paragraph of Lorem ipsum:** appr. 3s
+
+### Improvement ideas
+
+In case we want even faster performance, and less CPU load, we could create a cache
+(storage/memory heavier) with expiration, so frequently tested texts could be resolved faster.

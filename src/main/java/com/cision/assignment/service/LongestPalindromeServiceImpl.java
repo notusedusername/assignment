@@ -3,10 +3,6 @@ package com.cision.assignment.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
-
 @Service
 @RequiredArgsConstructor
 public class LongestPalindromeServiceImpl implements LongestPalindromeService {
@@ -14,28 +10,37 @@ public class LongestPalindromeServiceImpl implements LongestPalindromeService {
     private final PalindromeTesterService palindromeTester;
     private final PalindromeSanitizerService sanitizerService;
 
+    private static final int EMPTY_PALINDROME_LENGTH = 0;
+    private static final int MIN_PALINDROME_LENGTH = 0;
+
     @Override
     public int getLongestPalindromeSize(String text) {
         var alphanumericTextOnly = sanitizerService.sanitizeText(text);
-        var palindromeCandidates = getAllPalindromeCandidates(alphanumericTextOnly);
-        return getLongestPalindromeFrom(palindromeCandidates);
+        return getLongestSanitizedPalindrome(alphanumericTextOnly);
     }
 
-    private int getLongestPalindromeFrom(Set<String> palindromeCandidates) {
-        return palindromeCandidates.stream().sorted(Comparator.comparingInt(String::length).reversed())
-                .filter(palindromeTester::isPalindrome)
-                .findFirst()
-                .map(String::length)
-                .orElse(0);
+    private int getLongestSanitizedPalindrome(String word) {
+        if(word.isEmpty()) {
+            return EMPTY_PALINDROME_LENGTH;
+        } else {
+            return getLongestNotEmptyPalindrome(word);
+        }
     }
 
-    private Set<String> getAllPalindromeCandidates(String word) {
-        var candidates = new HashSet<String>();
-        for (var start = 0; start < word.length(); start++) {
-            for(var end = start + 1; end <= word.length(); end++) {
-                candidates.add(word.substring(start, end));
+    private int getLongestNotEmptyPalindrome(String word) {
+        for(var subStringLength = word.length(); subStringLength > 1; subStringLength--) {
+            for(var startIndex = 0; startIndex + subStringLength <= word.length(); startIndex++) {
+                var substringToCheck = substringWithLength(word, startIndex, subStringLength);
+
+                if(palindromeTester.isPalindrome(substringToCheck)) {
+                    return substringToCheck.length();
+                }
             }
         }
-        return candidates;
+        return MIN_PALINDROME_LENGTH;
+    }
+
+    private String substringWithLength(String word, int start, int length) {
+        return word.substring(start, start + length);
     }
 }
