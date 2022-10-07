@@ -3,9 +3,9 @@ spring:
     hibernate:
       ddl-auto: validate
   datasource:
-    url: jdbc:postgresql://localhost:5432/palindrome
-    username: ${postgres_username}
-    password: ${postgres_password}
+    url: ${DATABASE_URL}${APP_DB_NAME}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     driverClassName: org.postgresql.Driver
   flyway:
     enabled: true
