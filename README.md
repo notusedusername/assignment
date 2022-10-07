@@ -48,3 +48,6 @@ gradle test
 The app does not keep track of what timezone the request had. This means that if your payload
 contains a different timezone than UTC, the responses will still show the timestamps in UTC instead
 of your local time.
+
+The Hikari Pool complains about closed DB connections, it is probably something with the Docker networking
+(like shorter connection TTL that Postgres would have itself).
